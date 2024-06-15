@@ -4,7 +4,7 @@ import 'package:tweet_x/common/error_page.dart';
 import 'package:tweet_x/common/loading_page.dart';
 import 'package:tweet_x/features/auth/controller/auth_controller.dart';
 import 'package:tweet_x/features/auth/view/signup_view.dart';
-import 'package:tweet_x/features/home/home_view.dart';
+import 'package:tweet_x/features/home/view/home_view.dart';
 import 'package:tweet_x/theme/theme.dart';
 
 void main() {

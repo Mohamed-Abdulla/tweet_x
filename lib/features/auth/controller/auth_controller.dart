@@ -4,7 +4,7 @@ import 'package:tweet_x/apis/auth_api.dart';
 import 'package:tweet_x/apis/user_api.dart';
 import 'package:tweet_x/core/utils.dart';
 import 'package:tweet_x/features/auth/view/login_view.dart';
-import 'package:tweet_x/features/home/home_view.dart';
+import 'package:tweet_x/features/home/view/home_view.dart';
 import 'package:appwrite/models.dart';
 import 'package:tweet_x/models/user_model.dart';
 
@@ -14,6 +14,18 @@ final authControllerProvider =
     authAPI: ref.watch(authAPIProvider),
     userAPI: ref.watch(userAPIProvider),
   );
+});
+
+final currentUserDetailsProvider = FutureProvider((ref) {
+  final currentUserId = ref.watch(currentUserAccountProvider).value!.$id;
+  final userDetails = ref.watch(userDetailsProvider(currentUserId));
+  print("current user from provider, ${userDetails.value}");
+  return userDetails.value;
+});
+
+final userDetailsProvider = FutureProvider.family((ref, String uid) {
+  final authController = ref.watch(authControllerProvider.notifier);
+  return authController.getUserData(uid);
 });
 
 final currentUserAccountProvider = FutureProvider((ref) {
@@ -54,7 +66,7 @@ class AuthController extends StateNotifier<bool> {
         following: [],
         profilePic: '',
         bannerPic: '',
-        uid: '',
+        uid: r.$id,
         bio: '',
         isTwitterBlue: false,
       );
@@ -79,5 +91,15 @@ class AuthController extends StateNotifier<bool> {
       showSnackBar(context, 'Login successfully!');
       Navigator.push(context, HomeView.route());
     });
+  }
+
+  Future<UserModel> getUserData(String uid) async {
+    try {
+      final document = await _userAPI.getUserData(uid);
+      final updatedUser = UserModel.fromMap(document.data);
+      return updatedUser;
+    } catch (e) {
+      throw Exception(e);
+    }
   }
 }
