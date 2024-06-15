@@ -23,3 +23,8 @@ final appwriteAccountProvider = Provider((ref) {
       appwriteClientProvider); //watch is used to get the value of the provider
   return Account(client);
 });
+
+final appwriteDatabaseProvider = Provider((ref) {
+  final client = ref.watch(appwriteClientProvider);
+  return Databases(client);
+});
