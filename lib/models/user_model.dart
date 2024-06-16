@@ -71,7 +71,7 @@ class UserModel {
           List<String>.from((map['following'] ?? []).map((x) => x ?? '')),
       profilePic: map['profilePic'] ?? '',
       bannerPic: map['bannerPic'] ?? '',
-      uid: map['\$id '] ?? '',
+      uid: map['\$id'] ?? '',
       bio: map['bio'] ?? "",
       isTwitterBlue: map['isTwitterBlue'] ?? false,
     );
