@@ -44,6 +44,8 @@ class _CreateTweetScreenState extends ConsumerState<CreateTweetScreen> {
   void shareTweet() {
     ref.read(tweetControllerProvider.notifier).shareTweet(
         images: images, text: tweetTextController.text, context: context);
+    //now refresh the tweet list
+    // ref.refresh(getTweetsProvider);
   }
 
   @override
